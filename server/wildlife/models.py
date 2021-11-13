@@ -1,20 +1,21 @@
 from django.db import models
 
+
 class Critter(models.Model):
-    FISH = 'F'
-    BUG = 'B'
-    SEA = 'S'
-    SONG = 'K'
-    FOSSIL = 'F'
-    ART = 'A'
-    GYROID = 'G'
-    VILLAGER = 'V'
-    REACTION = 'R'
-    
+    FISH = "F"
+    BUG = "B"
+    SEA = "S"
+    SONG = "K"
+    FOSSIL = "F"
+    ART = "A"
+    GYROID = "G"
+    VILLAGER = "V"
+    REACTION = "R"
+
     CRITTER_TYPE_CHOICES = [
-        (FISH, 'Fish'),
-        (BUG, 'Bug'),
-        (SEA, 'Sea'),
+        (FISH, "Fish"),
+        (BUG, "Bug"),
+        (SEA, "Sea"),
     ]
     ueid = models.CharField(max_length=20)
 
@@ -40,7 +41,6 @@ class Critter(models.Model):
 
     # only for bugs
     weather = models.CharField(null=True)
-    
 
     nh_jan = models.CharField()
     nh_feb = models.CharField()
@@ -54,6 +54,7 @@ class Critter(models.Model):
     nh_oct = models.CharField()
     nh_nov = models.CharField()
     nh_dec = models.CharField()
+
     sh_jan = models.CharField()
     sh_feb = models.CharField()
     sh_mar = models.CharField()
@@ -66,7 +67,7 @@ class Critter(models.Model):
     sh_oct = models.CharField()
     sh_nov = models.CharField()
     sh_dec = models.CharField()
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -83,4 +84,96 @@ class Critter(models.Model):
         return self.critter_type == self.SEA
 
     def is_nh_all_year(self):
-        return self.critter_type == self.SEA
+        return "NA" not in (
+            self.nh_jan,
+            self.nh_feb,
+            self.nh_mar,
+            self.nh_apr,
+            self.nh_may,
+            self.nh_jun,
+            self.nh_jul,
+            self.nh_aug,
+            self.nh_sep,
+            self.nh_oct,
+            self.nh_nov,
+            self.nh_dec,
+        )
+
+    def is_sh_all_year(self):
+        return "NA" not in (
+            self.sh_jan,
+            self.sh_feb,
+            self.sh_mar,
+            self.sh_apr,
+            self.sh_may,
+            self.sh_jun,
+            self.sh_jul,
+            self.sh_aug,
+            self.sh_sep,
+            self.sh_oct,
+            self.sh_nov,
+            self.sh_dec,
+        )
+
+
+class Art(models.Model):
+    ueid = models.CharField(max_length=20)
+
+    name = models.CharField(max_length=100)
+    description = models.CharField()
+    real_title = models.CharField()
+    image_uri = models.CharField()
+    high_res_image_uri = models.CharField(null=True)
+    bells_sell = models.IntegerField(null=True)
+    fake_image_uri = models.CharField(null=True)
+
+    def __str__(self):
+        return self.name
+
+    def useful_image_uri(self):
+        return self.high_res_image_uri if self.high_res_image_uri is not None else self.image_uri
+
+    def is_always_real(self):
+        return self.fake_image_uri is None
+
+
+class Fossil(models.Model):
+    ueid = models.CharField(max_length=20)
+
+    name = models.CharField(max_length=100)
+    description = models.CharField()
+    image_uri = models.CharField(null=True)
+    bells_sell = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
+
+class Song(models.Model):
+    ueid = models.CharField(max_length=20)
+
+    name = models.CharField(max_length=100)
+    source = models.CharField()
+    source_notes = models.CharField()
+    icon_uri = models.CharField(null=True)
+    image_uri = models.CharField(null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Gyroid(models.Model):
+    ueid = models.CharField(max_length=20)
+
+    name = models.CharField(max_length=100)
+    variation = models.CharField(max_length=100)
+    source = models.CharField()
+    source_notes = models.CharField()
+    icon_uri = models.CharField(null=True)
+    image_uri = models.CharField(null=True)
+
+    def __str__(self):
+        name = self.name
+        if(self.variation != 'NA'):
+            name = self.var
+        return self.name
