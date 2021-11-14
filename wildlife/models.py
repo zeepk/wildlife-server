@@ -1,6 +1,36 @@
 from django.db import models
 
 
+class Caught(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_id = models.IntegerField()
+    ueid = models.CharField(max_length=20)
+    name = models.CharField(null=True, max_length=100)
+    active = models.BooleanField(default=True)
+    FISH = "F"
+    BUG = "B"
+    SEA = "S"
+    SONG = "K"
+    FOSSIL = "F"
+    ART = "A"
+    GYROID = "G"
+    VILLAGER = "V"
+    REACTION = "R"
+
+    ITEM_TYPE_CHOICES = [
+        (FISH, "Fish"),
+        (BUG, "Bug"),
+        (SEA, "Sea"),
+        (SONG, "Song"),
+        (FOSSIL, "Fossil"),
+        (ART, "Art"),
+        (GYROID, "Gyroid"),
+        (VILLAGER, "Villager"),
+        (REACTION, "Reaction"),
+    ]
+    item_type = models.CharField(max_length=2, choices=ITEM_TYPE_CHOICES)
+
+
 class Critter(models.Model):
     id = models.AutoField(primary_key=True)
     FISH = "F"
