@@ -14,6 +14,7 @@ class CaughtViewSet(viewsets.ModelViewSet):
     serializer_class = CritterSerializer
 
     def get_queryset(self):
+        print(self.request.user.id)
         return Caught.objects.filter(user_id=self.request.user.id)
 
     def perform_create(self, serializer):

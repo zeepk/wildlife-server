@@ -51,6 +51,7 @@ class Critter(models.Model):
     ueid = models.CharField(max_length=20)
 
     critter_type = models.CharField(max_length=2, choices=CRITTER_TYPE_CHOICES)
+    order = models.IntegerField()
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
     icon_uri = models.CharField(null=True, max_length=500)

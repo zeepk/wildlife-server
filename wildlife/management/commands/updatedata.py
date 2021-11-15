@@ -68,6 +68,7 @@ class Command(BaseCommand):
             for row in fish_values:
                 obj, created = Critter.objects.update_or_create(
                     name=row[1],
+                    order=row[0],
                     critter_type=Critter.FISH,
                     icon_uri=row[2].split('"')[1],
                     image_uri=row[3].split('"')[1],
@@ -133,6 +134,7 @@ class Command(BaseCommand):
             for row in bugs_values:
                 obj, created = Critter.objects.update_or_create(
                     name=row[1],
+                    order=row[0],
                     critter_type=Critter.BUG,
                     icon_uri=row[2].split('"')[1],
                     image_uri=row[3].split('"')[1],
@@ -196,6 +198,7 @@ class Command(BaseCommand):
             for row in sea_values:
                 obj, created = Critter.objects.update_or_create(
                     name=row[1],
+                    order=row[0],
                     critter_type=Critter.SEA,
                     icon_uri=row[2].split('"')[1],
                     image_uri=row[3].split('"')[1],
